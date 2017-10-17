@@ -12,5 +12,4 @@
                  [clj-aws-s3 "0.3.10" :exclusions [joda-time]]
                  [tentacles "0.5.1"
                   :exclusions [org.clojure/clojure com.fasterxml.jackson.core/jackson-core]]
-                 [clj-cli-ext "0.1.1"]]
-  )
+                 [clj-cli-ext "0.1.1"]])
