@@ -1,6 +1,6 @@
 # file-access
 
-A Clojure library designed to ... well, that part is up to you.
+A Clojure library designed to read files from the Local filesystem, SFTP, S3, and github with a simple consistent interface. 
 
 ## Usage
 
