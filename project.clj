@@ -1,4 +1,4 @@
-(defproject file-access "0.1.0"
+(defproject org.eag.file-access "0.1.1"
   :description "A library that enables easy reading of files from the local filesystem, SFTP, S3, and github"
   :url "http://github.com/EricGebhart/file-access"
   :license {:name "Eclipse Public License"
@@ -11,5 +11,9 @@
                  [clojure.joda-time "0.7.0"]
                  [clj-aws-s3 "0.3.10" :exclusions [joda-time]]
                  [tentacles "0.5.1"
-                  :exclusions [org.clojure/clojure com.fasterxml.jackson.core/jackson-core]]
-                 [clj-cli-ext "0.1.1"]])
+                  :exclusions [org.clojure/clojure com.fasterxml.jackson.core/jackson-core]]]
+
+  :profiles {:dev {dependencies [org.eag.clie "0.1.2"]}}
+
+
+  :repositories {"local" ~(str (.toURI (java.io.File. "/home/eric/.m2/repository")))})

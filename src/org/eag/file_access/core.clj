@@ -1,4 +1,4 @@
-(ns file-access.core
+(ns org.eag.file-access.core
   (:require [aws.sdk.s3 :as s3]
             [clj-ssh.ssh :as ssh]
             [tentacles.repos :as github]
@@ -23,14 +23,14 @@
 
 (defmulti reader reader-dispatch)
 
-(defmethod reader :file [{:keys [file]}]
-  (io/reader file))
+(defmethod reader :file [{:keys [filename]}]
+  (io/reader filename))
 
-(defmethod reader :local [{:keys [file]}]
-  (io/reader file))
+(defmethod reader :local [{:keys [filename]}]
+  (io/reader filename))
 
-(defmethod reader :default [{:keys [file]}]
-  (io/reader file))
+(defmethod reader :default [{:keys [filename]}]
+  (io/reader filename))
 
 (defmethod reader :github
   [{:keys [user repository path branch auth] :or {branch "master"}}]
@@ -49,7 +49,7 @@
     (io/reader (:content (s3/get-object cred bucket file-key)))))
 
 (defmethod reader :sftp
-  [{:keys [file host private-key]}]
+  [{:keys [filename host private-key]}]
 
   (let [agent (ssh/ssh-agent {})]
     ;;[agent (ssh/ssh-agent {:use-system-ssh-agent false})]
@@ -58,12 +58,12 @@
       (ssh/with-connection session
         (let [channel (ssh/ssh-sftp session)]
           (ssh/with-channel-connection channel
-            (io/reader (ssh/sftp channel {} :get file))))))))
+            (io/reader (ssh/sftp channel {} :get filename))))))))
 
 ;; {:name "Something-from-S3"
-;;  :file "local or sftp filename."
+;;  :filename "local or sftp filename."
 ;;  :type "csv"
-;;  :source :s3  ;; :s3, :local or :file, :sftp, :github
+;;  :source :s3  ;; :s3, :local or :filename, :sftp, :github
 
 ;;  ;; S3, SFTP
 ;;  :file-key "S3 file key"
@@ -109,7 +109,7 @@
 
 (defn slurp-file-cmdline
   "read a file from a source - based on the options as built by the commandline interface.
-  ie. {:file {:file <filename>}} --> {:source :file :file <filename>}
+  ie. {:file {:filename <filename>}} --> {:source :file :filename <filename>}
   ie. {:github {:path <filename> ... }} --> {:source :github :path <filename> ...} "
   [options]
   (let [transport (first (keys options))

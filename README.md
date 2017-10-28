@@ -4,10 +4,12 @@ A Clojure library designed to read files from the Local filesystem, SFTP, S3, an
 
 ## Usage
 
+Lein: `[org.eag.file-access "0.1.1"]`
+
 Each reader takes a map of options the value of :source determines the type of file.
 
 ``` 
-    {:source :file :file "test/resources/test1.edn"}
+    {:source :file :filename "test/resources/test1.edn"}
 
     {:source :s3 :access-key <access-key> :secret-key <secret-key> :bucket <bucket> :file-key <filename>}
 
@@ -24,7 +26,7 @@ It is also possible to use the reader directly and place the output on a channel
 method for larger files.
 
 ```
-(require [file-access :as fa] )
+(require [org.eag.file-access :as fa] )
 
 
 (defn importer->channel

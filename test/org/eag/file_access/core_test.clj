@@ -1,8 +1,8 @@
-(ns file-access.core-test
+(ns org.eag.file-access.core-test
   (:require [aws.sdk.s3 :as s3]
-            [clj-cli-ext.core :as clie]
+            [org.eag.clie.core :as clie]
             [clojure.java.io :as io]
-            [file-access.core :refer :all]
+            [org.eag.file-access.core :refer :all]
             [midje.sweet :refer :all]))
 
 ;; make sure you have the environment variables set.
